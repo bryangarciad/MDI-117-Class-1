@@ -1,0 +1,62 @@
+//
+//  DashboardView.swift
+//  ProfessorToDo
+//
+//  Created SDGKU
+//
+
+import SwiftUI
+
+struct DashboardView: View {
+
+    @Binding var profile: Profile
+    @State private var selectedGroup: TaskGroup?
+    @State private var isShowingAddGroup = false
+    @Environment(\.dismiss) var dismiss
+
+    var body: some View {
+        NavigationSplitView {
+            List(selection: $selectedGroup) {
+                ForEach(profile.groups) { group in
+                    NavigationLink(value: group) {
+                        Label(group.title, systemImage: group.symbolName)
+                    }
+                    .accessibilityIdentifier("groupRow_\(group.title)")
+                }
+            }
+            .navigationTitle(profile.name)
+            .listStyle(.automatic)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label : {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                            Text("Home")
+                        }
+                    }
+                    .accessibilityIdentifier("backToHomeButton")
+                }
+                ToolbarItem(placement: .primaryAction) {
+                    Button { isShowingAddGroup = true } label : {
+                        Image(systemName: "plus")
+                    }
+                    .accessibilityIdentifier("addGroupButton")
+                }
+            }
+        } detail: {
+            if let group = selectedGroup {
+                if let index = profile.groups.firstIndex(where: { $0.id == group.id}) {
+                    TaskGroupDetailView(groups: $profile.groups[index])
+                }
+            } else {
+                ContentUnavailableView("Select a Group", systemImage: "sidebar.left")
+            }
+        }
+        .sheet(isPresented: $isShowingAddGroup) {
+            NewGroupView { newGroup in
+                profile.groups.append(newGroup)}
+        }
+    }
+}
