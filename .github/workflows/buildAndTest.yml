@@ -20,9 +20,14 @@ jobs:
         
       - name: debug step 1
         run: ls
+        
+      - name: debug step 2
+        run: cd ProfessorToDo
+
+      - name: debug step 3
+        run: ls
 
       - name: Run Tests
-        working-directory: ProfessorToDo
         run: |
           xcodebuild test \
             -project "ProfessorToDo.xcodeproj" \
