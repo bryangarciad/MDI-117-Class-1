@@ -19,7 +19,7 @@ jobs:
         run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 
       - name: Run Tests
-        working-directory: ./ProfessorToDo
+        working-directory: ProfessorToDo
         run: |
           xcodebuild test \
             -project "ProfessorToDo.xcodeproj" \
