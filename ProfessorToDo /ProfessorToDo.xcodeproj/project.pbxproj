@@ -45,6 +45,11 @@
 			path = ProfessorToDoUITests;
 			sourceTree = "<group>";
 		};
+		BC7309332F8891D900A707CE /* .github */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = .github;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +80,7 @@
 		0E69BBFE2EC26BB600312DCE = {
 			isa = PBXGroup;
 			children = (
+				BC7309332F8891D900A707CE /* .github */,
 				0E69BC092EC26BB600312DCE /* ProfessorToDo */,
 				0E69BC1A2EC26BB700312DCE /* ProfessorToDoTests */,
 				0E69BC242EC26BB700312DCE /* ProfessorToDoUITests */,
@@ -109,6 +115,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				0E69BC092EC26BB600312DCE /* ProfessorToDo */,
+				BC7309332F8891D900A707CE /* .github */,
 			);
 			name = ProfessorToDo;
 			packageProductDependencies = (

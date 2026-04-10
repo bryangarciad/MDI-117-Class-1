@@ -108,9 +108,10 @@ class ProfileDataManager: ObservableObject {
         do {
             let decoder = JSONDecoder()
             profiles = try decoder.decode([Profile].self, from: data)
-            print("✅ Profiles loaded successfully")
+            profiles.sort { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedDescending }
+            print("Profile s loaded successfully")
         } catch {
-            print("❌ Failed to load profiles: \(error.localizedDescription)")
+            print("Failed to load profiles: \(error.localizedDescription)")
         }
     }
     

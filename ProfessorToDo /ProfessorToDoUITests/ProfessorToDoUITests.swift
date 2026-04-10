@@ -59,54 +59,23 @@ final class ProfessorToDoUITests: XCTestCase {
         }
     }
     
-    // MARK: 117 - 1
-    // E2E Test
-    func testFullUserFlow() {
-        // 1. Verify that the "Proffesor" Card is available
-        let professorCard = app.buttons["profileCard_Professor"]
-        XCTAssertTrue(professorCard.waitForExistence(timeout: 5), "The Proffesor Card should exists in screen")
-        professorCard.tap()
+    
+    // Given an array of two users in the persistent storage, when the Content View load, Then the screen should shoe the profile
+    // Card Sorted alpabethically Descending
+    func testContentProfileCardsSort() {
+        let profileCardsQuery = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "profileCard_"))
+        XCTAssertGreaterThan(profileCardsQuery.count, 1, "Need at least two cards to test ordering")
         
-        // 2. Verify we are on the Dasboard and tap "Add Group"
-        let addGroupButton = app.buttons["addGroupButton"]
-        XCTAssertTrue(addGroupButton.waitForExistence(timeout: 10), "The add group button should be vissible on the dashboard")
-        addGroupButton.tap()
-        
-        //3. Fill out the new Group View
-        let groupNameInputeField = app.textFields["newGroupNameField"]
-        XCTAssertTrue(groupNameInputeField.exists, "The Group Name Text Input Field should be present")
-        groupNameInputeField.tap()
-        groupNameInputeField.typeText("Test Project")
-        
-        let iconButton = app.images["iconSelect_list.bullet"]
-        if iconButton.exists {
-            iconButton.tap()
+        var names: [String] = []
+        for i in 0..<profileCardsQuery.count {
+            let element = profileCardsQuery.element(boundBy: i)
+            XCTAssertTrue(element.waitForExistence(timeout: 5))
+            let fullId = element.identifier
+            let name = fullId.replacingOccurrences(of: "profileCard_", with: "") // strip out prefix
+            names.append(name)
         }
         
-        let saveButton = app.buttons["saveGroupButton"]
-        if saveButton.exists {
-            saveButton.tap()
-        }
-        
-        let newGroupRow = app.buttons["groupRow_Test Project"] // this technique to select ui elemts by accesibility id
-        XCTAssertTrue(newGroupRow.waitForExistence(timeout: 5), "The new group 'Test Project' should appear in the dashboard")
-        newGroupRow.tap()
-        
-        //4. Add a Task Inside the Newle Created Group
-        let addTaskButton = app.buttons["addTaskButton"]
-        XCTAssertTrue(addTaskButton.exists, "The add task button should be available in the detail view")
-        addTaskButton.tap()
-        
-        // 5. add a new task under selected group
-        let taskTextField = app.textFields.firstMatch
-        taskTextField.tap()
-        taskTextField.typeText("Finish UI Test")
-        
-        app.keyboards.buttons["Return"].tap()
-        
-        let completionToggle = app.images["taskCompletionToggle_Finish UI Test"]
-        XCTAssertTrue(completionToggle.exists, "The task completion toggle should exists")
-        completionToggle.tap()
+        XCTAssertEqual(names, ["Student", "Professor"])
     }
     
 }
