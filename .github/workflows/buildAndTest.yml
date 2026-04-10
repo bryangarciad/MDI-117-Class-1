@@ -24,6 +24,6 @@ jobs:
           xcodebuild test \
             -project "ProfessorToDo.xcodeproj" \
             -scheme "ProfessorToDo" \
-            -destination "platform:iOS Simulator,arch:arm64,id:3275451F-C3F7-4DB6-B086-96397022262C,OS:18.5,name:iPad (10th generation)" \
+            -destination 'platform=iOS Simulator, arch=arm64, id=3275451F-C3F7-4DB6-B086-96397022262C, OS=18.5, name=iPad (10th generation)' \
             -enableCodeCoverage YES \
             clean build test
